@@ -1,0 +1,22 @@
+# Existing clone of the powersync JS client (kept out of VCS)
+powersync-js
+
+# Node/JS
+node_modules
+dist
+**/node_modules
+**/dist
+.turbo
+.cache
+.vite
+coverage
+*.log
+
+# Env
+.env
+.env.*
+
+# Editor
+.DS_Store
+.idea
+.vscode

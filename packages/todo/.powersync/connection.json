@@ -1,0 +1,10 @@
+{
+  "name": "Default",
+  "host": "db.mcvxpinhffmvwutgsdua.supabase.co",
+  "port": 5432,
+  "database": "postgres",
+  "user": "powersync_role",
+  "password": "UmT3BlbkFJX61wWKew9aZW3",
+  "sslmode": "require",
+  "uri": "postgresql://powersync_role:UmT3BlbkFJX61wWKew9aZW3@db.mcvxpinhffmvwutgsdua.supabase.co:5432/postgres"
+}

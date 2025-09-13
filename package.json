@@ -1,0 +1,18 @@
+{
+  "name": "powersync-e2ee",
+  "private": true,
+  "workspaces": [
+    "packages/crypto/*",
+    "packages/todo/*"
+  ],
+  "packageManager": "yarn@1.22.22",
+  "scripts": {
+    "dev": "yarn workspace @app/client dev",
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test",
+    "typecheck": "yarn workspaces run typecheck"
+  },
+  "devDependencies": {
+    "supabase": "^2.41.4"
+  }
+}
