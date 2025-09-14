@@ -59,9 +59,7 @@ export class WebAuthnProvider implements WebAuthnCrypto {
           // For PRF, registration typically just enables the extension;
           // you evaluate it during get()/assertion.
           // Spec: use `enabled: true` (not `enable`).
-          prf: { enabled: true } as any,
-          // Some authenticators only support legacy hmacCreateSecret; enable it too.
-          hmacCreateSecret: true as any,
+          prf: {  } 
         },
       }
     const cred = (await navigator.credentials.create({ publicKey })) as PublicKeyCredential | null;
@@ -87,7 +85,7 @@ export class WebAuthnProvider implements WebAuthnCrypto {
       allowCredentials: allow,
       userVerification: 'preferred',
       timeout: 60_000,
-      extensions: { prf: { eval: { first: salt.buffer } } as any, hmacCreateSecret: true as any },
+      extensions: { prf: { eval: { first: salt.buffer } }  },
     };
     const assertion = (await navigator.credentials.get({ publicKey })) as PublicKeyCredentialWithPRF | null;
     if (!assertion) throw new Error('Assertion failed');
@@ -96,11 +94,7 @@ export class WebAuthnProvider implements WebAuthnCrypto {
     if (prf) {
       return new Uint8Array(prf).slice(0, 32);
     }
-    // Fallback: hmacCreateSecret extension (rare)
-    if (ext.hmacCreateSecret && typeof ext.hmacCreateSecret !== 'boolean') {
-      const v = new Uint8Array(ext.hmacCreateSecret as ArrayBuffer);
-      return v.slice(0, 32);
-    }
+
     throw new Error('WebAuthn PRF/hmac-secret not available');
   }
 

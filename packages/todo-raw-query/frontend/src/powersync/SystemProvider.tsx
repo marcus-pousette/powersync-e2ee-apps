@@ -15,6 +15,10 @@ import {
 import { getAccessToken, getSupabase } from "../lib/supabase";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
+// NEW: bring in our pair + DDL installer
+import { ensurePairsDDL } from "@crypto/sqlite";
+import { TODOS_PAIR } from "../encrypted/todosPair";
+
 class TokenConnector
   extends BaseObserver<{}>
   implements PowerSyncBackendConnector
@@ -76,9 +80,9 @@ class TokenConnector
 
 export function SystemProvider({ children }: { children: React.ReactNode }) {
   const endpoint = import.meta.env.VITE_POWERSYNC_URL;
-
+  console.debug("VITE_POWERSYNC_URL =", import.meta.env.VITE_POWERSYNC_URL);
   const db = useMemo(() => {
-    // Managed tables so we can read/write locally via PowerSync
+    // Keep PowerSync schema minimal: NO domain model columns for todos here.
     const e2ee_keys = new Table({
       id: column.text,
       user_id: column.text,
@@ -90,26 +94,11 @@ export function SystemProvider({ children }: { children: React.ReactNode }) {
       kdf_salt_b64: column.text,
       created_at: column.text,
     });
-    const todos = new Table({
-      id: column.text,
-      user_id: column.text,
-      bucket_id: column.text,
-      alg: column.text,
-      aad: column.text,
-      nonce_b64: column.text,
-      cipher_b64: column.text,
-      kdf_salt_b64: column.text,
-      created_at: column.text,
-      updated_at: column.text,
-    });
-    const schema = new Schema({ e2ee_keys, todos });
+    const schema = new Schema({ e2ee_keys });
     const powerSync = new PowerSyncDatabase({
-      // Bump filename to avoid legacy local schema conflicts
-      database: { dbFilename: "e2ee-todo-v2.db" },
+      database: { dbFilename: "e2ee-todo-v3.db" },
       schema,
       flags: { disableSSRWarning: true },
-      
-      
     });
     return powerSync;
   }, []);
@@ -120,6 +109,10 @@ export function SystemProvider({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         await db.init();
+
+        // IMPORTANT: Create encrypted raw ("todos") + local mirror ("todos_plain")
+        await ensurePairsDDL(db, [TODOS_PAIR]);
+
         await db.connect(connector);
         await db.waitForReady();
       } catch (err: any) {
@@ -130,13 +123,14 @@ export function SystemProvider({ children }: { children: React.ReactNode }) {
           msg.includes("powersync_drop_view")
         ) {
           console.warn(
-            "PowerSync local schema mismatch detected. Clearing local DB and retrying…",
+            "PowerSync local schema mismatch. Clearing and retrying…",
           );
           try {
             await db.disconnectAndClear({ clearLocal: true });
           } catch {}
           try {
             await db.init();
+            await ensurePairsDDL(db, [TODOS_PAIR]);
             await db.connect(connector);
             await db.waitForReady();
           } catch (e2) {

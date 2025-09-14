@@ -26,6 +26,7 @@ import { useWrappedKey } from "./powersync/keys";
 import { ensureDEKWrapped } from "./lib/keyring";
 import NewListCard from "./components/NewListCard";
 import OpenListCard from "./components/OpenListCard";
+import { WASQLiteOpenFactory } from "@powersync/web";
 
 export default function App() {
   const db = usePowerSync();
@@ -156,7 +157,7 @@ export default function App() {
     return createPasswordCrypto({ password, preferWebCrypto: true });
   }, [ready, useWebAuthn, password]);
 
-  // Debug: log how many key rows exist before any changes
+
   useEffect(() => {
     (async () => {
       if (!ready) return;

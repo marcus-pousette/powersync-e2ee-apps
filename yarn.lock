@@ -428,7 +428,7 @@
   resolved "https://registry.yarnpkg.com/@powersync/react/-/react-1.7.3.tgz#7e9b06542443adacc54def56d3f7ce3a4d0ac2e1"
   integrity sha512-VuGq/ZgNfwx0FFnqf3vopUbcXJnvujVBvifT/8qF745a1Ex0z2h128sd70a+gGD5AL3QFiWfvFguJk/dJLc1Pw==
 
-"@powersync/web@^1.2.4":
+"@powersync/web@1.26.1", "@powersync/web@^1.2.4":
   version "1.26.1"
   resolved "https://registry.yarnpkg.com/@powersync/web/-/web-1.26.1.tgz#03abea39340dfea7cc11ee9edde607e6d3086284"
   integrity sha512-MkIjIk/Lsc2QlR6yWonqER/OaYlN+GEzOD1NNXJMPTL7Rbs+eSkvhDjGqmpGYGextoXm3La3qTZR367d3cf9iw==
