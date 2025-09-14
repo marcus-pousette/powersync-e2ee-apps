@@ -431,28 +431,29 @@ export default function App() {
                 <p className="muted -mt-0.5">End‑to‑end encrypted tasks</p>
               </div>
             </div>
-            <div className="relative">
+            <div className="flex items-center gap-3 h-9">
+              <SyncStatusBadge />
               {userId ? (
                 <button
                   type="button"
-                  className="inline-flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="inline-flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 h-9"
                   onClick={() => setAuthMenuOpen((v) => !v)}
                 >
                   <Identicon seed={userId} size={22} />
                   <ChevronDownIcon className="h-4 w-4" />
                 </button>
               ) : (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 h-9">
                   <button
                     type="button"
-                    className="btn-secondary-sm"
+                    className="btn-secondary-sm h-9"
                     onClick={() => setAuthMenuOpen((v) => !v)}
                   >
                     <UserIcon className="h-4 w-4" /> Sign In
                   </button>
                   <button
                     type="button"
-                    className="btn-secondary-sm"
+                    className="btn-secondary-sm h-9"
                     onClick={async () => {
                       setAuthError(null);
                       try {
@@ -467,9 +468,6 @@ export default function App() {
                   </button>
                 </div>
               )}
-              <div className="absolute -left-28 top-0">
-                <SyncStatusBadge />
-              </div>
               {authMenuOpen && !userId && (
                 <div className="absolute right-0 mt-2 w-72 rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-lg p-3 z-10">
                   <div className="flex flex-col gap-2">
@@ -803,29 +801,31 @@ export default function App() {
               Encrypted Tasks
             </h1>
           </div>
-          <div className="flex items-center gap-3 relative">
-            <SyncStatusBadge />
+          <div className="flex items-center gap-3 relative h-9">
+            <div className="flex items-center h-9">
+              <SyncStatusBadge />
+            </div>
             {userId ? (
               <button
                 type="button"
-                className="inline-flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="inline-flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 h-9"
                 onClick={() => setAuthMenuOpen((v) => !v)}
               >
                 <Identicon seed={userId} size={22} />
                 <ChevronDownIcon className="h-4 w-4" />
               </button>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 h-9">
                 <button
                   type="button"
-                  className="btn-secondary-sm"
+                  className="btn-secondary-sm h-9"
                   onClick={() => setAuthMenuOpen((v) => !v)}
                 >
                   <UserIcon className="h-4 w-4" /> Sign In
                 </button>
                 <button
                   type="button"
-                  className="btn-secondary-sm"
+                  className="btn-secondary-sm h-9"
                   onClick={async () => {
                     setAuthError(null);
                     try {
