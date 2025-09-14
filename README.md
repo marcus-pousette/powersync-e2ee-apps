@@ -7,6 +7,9 @@ This repo contains examples and libraries for building end‑to‑end encrypted 
 - [packages/todo/frontend](packages/todo/frontend) — "Todo" (baseline app)
 - [packages/todo-raw-query/frontend](packages/todo-raw-query/frontend) — "Todo (raw-query + encrypted mirrors)"
 
+![Screenshot of Todo (raw-query + encrypted mirrors)](packages/todo-raw-query/frontend/screenshot.png)
+
+
 ## What’s the difference between "todo" and "todo-raw-query"?
 
 | Aspect | todo | todo-raw-query |
